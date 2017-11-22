@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CRT - Database Manager</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+  <link href="style-manager.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel="stylesheet">
+  <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body onload="showMeTheGames()">
+
+  <main id="manager" class="modal">
+    <ul class="tab-bar">
+      <li class="tab tab-selected">Games</li>
+      <li class="tab"><a href="#">Emulators</a></li>
+      <li class="tab"><a href="#">Systems</a></li>
+      <li class="tab"><a href="#">General Settings</a></li>
+    </ul>
+
+    <div class="manager-container">
+
+      <section class="list">
+        <ul class="list-ul">
+          <!-- <li>Game Title</li> -->
+        </ul>
+      </section>
+
+      <section class="data-area">
+
+        <form class="form-manager">
+          <input type="text" class="form-ti" name="title" placeholder="Game Title" required="true" onchange="fillSortOrder(0)">
+          <input type="text" class="form-so" name="sort_order" placeholder="Sort Order" required="true">
+          <input type="text" name="year" placeholder="Year of Release">
+          <input type="text" name="genre" placeholder="Genre">
+
+          <label>Box Art
+            <input type="file" name="box_art" accept="image/png, image/jpeg, image/gif, image/tiff" class="form-ba" onchange="previewImage('form-ba','boxart-thumb')">
+          </label>
+          <label>Background Image
+            <input type="file" name="background" accept="image/png, image/jpeg, image/gif, image/tiff" class="form-bg" onchange="previewImage('form-bg','background-thumb')">
+          </label>
+
+          <figure class="boxart-thumb"></figure>
+          <figure class="background-thumb"></figure>
+
+          <span class="file-input">
+            <input type="text" name="full_path" placeholder="Path to Game/ROM" required="true" class="file-path">
+            <label for="file-browser">Browse...</label>
+            <input type="file" id="file-browser" onchange="getFilePath('file-browser','file-path')">
+          </span>
+
+          <input type="text" name="custom_commands" placeholder="Custom Commands">
+
+          <select name="system_id" id="system-selection">
+          </select>
+
+          <select name="emulator_id" id="emulator-selection">
+          </select>
+
+          <button type="submit" name="id" class="form-sb">Save</button>
+          <a href="#">
+            <button type="button" onclick="resetForm('form-manager')">Cancel</button>
+          </a>
+        </form>
+
+      </section>
+
+    </div>
+  </main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
