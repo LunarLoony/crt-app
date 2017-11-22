@@ -1,0 +1,23 @@
+{
+  "name": "crt-app",
+  "version": "0.1.0",
+  "main": "./main.js",
+  "description": "CRT is a minimalist frontend for organising (and playing) your digital game collection.",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Phlum/crt-app"
+  },
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "electron-rebuild"
+  },
+  "devDependencies": {
+    "electron": "^1.8.1",
+    "electron-rebuild": "^1.6.0"
+  },
+  "dependencies": {
+    "array-sort": "^0.1.4",
+    "fs-extra": "^4.0.2"
+  }
+}
