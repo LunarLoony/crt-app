@@ -1,4 +1,10 @@
 {
  "emulators_list": [
+  {
+   "title": "No Emulator",
+   "id": 0,
+   "full_path": null,
+   "syntax": "%G %C"
+  }
  ]
 }
