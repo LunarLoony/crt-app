@@ -29,8 +29,17 @@ app.on('ready', function() {
 
   mainWindow.loadURL('file://' + __dirname + '/app/index.htm');
 
+  mainWindow.on('closed', function () {
+    mainWindow = null;
+  });
+
   //Remove top menu bar - we'll add our own in-app menu later
-  //mainWindow.setMenu(null);
+  mainWindow.setMenu(null);
+});
+
+app.on('window-all-closed', function() {
+  if (process.platform != 'darwin')
+    app.quit();
 });
 
 //IPC allows rendered windows to communicate with the main process.
