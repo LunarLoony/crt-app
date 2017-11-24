@@ -458,7 +458,7 @@ function copyImage(formClass,finalName) {
       break;
   }
 
-  fs.copySync(imgOrig,"app/images/" + finalName + ext);
+  fs.copySync(imgOrig,__dirname + "/images/" + finalName + ext);
   return ("images/" + finalName + ext);
 }
 
