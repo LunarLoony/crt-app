@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="style.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel='stylesheet' type='text/css'>
+	<link href="favicon.png" rel="icon" type="image/x-icon">
+	<meta charset="utf-8">
+	<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Magnific Popup core CSS file -->
+	<link rel="stylesheet" href="magnific-popup/magnific-popup.css">
+
+	<title>CRT - Your games, your way.</title>
+</head>
+
+<body>
+
+<div class="main">
+
+	<nav>
+		<a class="nav-btn" href="https://github.com/Phlum/crt-app/">View on GitHub</a>
+	</nav>
+
+	<div class="popup-gallery">
+		<img class="logo-img" src="images/crt-header-web.png">
+	</div>
+
+	<p>
+		CRT is the portal to your game collection. With its straightforward interface and sleek design, it's a great way to organise (and play) your digital game collection.
+	</p><p>
+		Creating using Node.JS, Electron, and some good old-fashioned HTML and CSS, CRT is simple and snappy, helping you get to the important part: gaming.
+	</p>
+
+	<h3>Screenshots</h3>
+	<div class="popup-gallery">
+	<a href="images/capture1.png" class="popup-link" title="Main Screen"><img src="images/capture1.png" class="gallery-img"></a> <a href="images/capture2.png" class="popup-link" title="Adding a Game"><img src="images/capture2.png" class="gallery-img"></a>
+	</div>
+
+	<h3>Download</h3>
+	<p>
+		CRT is currently in very early alpha stages. While it's in a mostly workable state, many features are yet to be added.
+	</p>
+	<div class="downloadbuttons">
+		<a href="https://github.com/Phlum/crt-app/releases" class="download download-colour">Download on GitHub</a>
+	</div>
+
+	<h3>Licence</h3>
+	<p>
+	CRT is licensed under GNU GPL v3. What does this mean?
+		<ul>
+			<li>Freedom to use the software for any purpose;</li>
+			<li>Freedom to change the software to suit your needs;</li>
+			<li>Freedom to share the software with your friends and neighbours;</li>
+			<li>Freedom to share the changes you make.</li>
+		</ul>
+	</p>
+
+</div>
+
+<!-- jQuery 1.7.2+ or Zepto.js 1.0+ -->
+<script src="magnific-popup/jquery.min.js"></script>
+
+<!-- Magnific Popup core JS file -->
+<script src="magnific-popup/jquery.magnific-popup.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.popup-gallery').each(function() { // the containers for all your galleries
+		$(this).magnificPopup({
+		  delegate: 'a',
+		  type: 'image',
+		  cursor: 'mfp-zoom-out-cur',
+		  // other options
+		  closeOnContentClick: 'true',
+		  titleSrc: 'title',
+			mainClass: 'mfp-fade',
+
+		  gallery: {
+			  enabled: true, // set to true to enable gallery
+			  preload: [1,1], // read about this option in next Lazy-loading section
+			  navigateByImgClick: true,
+			  arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"></button>', // markup of an arrow button
+			  tPrev: 'Previous (Left arrow key)', // title for left button
+			  tNext: 'Next (Right arrow key)', // title for right button
+			  tCounter: '<span class="mfp-counter">%curr% of %total%</span>' // markup of counter
+			}
+		});
+	});
+});
+</script>
+
+</body>
+</html>
