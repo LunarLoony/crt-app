@@ -15,8 +15,17 @@ var path = require('path');
 var fs = require('fs-extra');
 var arraySort = require('array-sort');
 
+//Init databases.
+var gameDbUri = __dirname + "/data/games.json";
+var emuDbUri = __dirname + "/data/emulators.json";
+var sysDbUri = __dirname + "/data/systems.json";
+var settingsDbUri = __dirname + "/settings/settings.json";
+
+console.log(gameDbUri + "\n" + emuDbUri + "\n" + sysDbUri);
+
+var settingsDb = JSON.parse(loadGamesList(__dirname + "/settings/settings.json"));
+
 //Init global variables.
-var settingsDb = JSON.parse(loadGamesList("app/settings/settings.json"));
 var sortOrder = settingsDb.sortOrder;
 var descending = settingsDb.descending;
 var filterType = settingsDb.groupType;
@@ -32,7 +41,7 @@ function loadGamesList(uri) {
 
 //This function uses loadGamesList() to parse the user's list of games, then displays them in the main window.
 function showMeTheGames() {
-  var jsdb = JSON.parse(loadGamesList("app/data/games.json"));
+  var jsdb = JSON.parse(loadGamesList(gameDbUri));
   //Sort by a given order. 'Desc' must be a boolean.
   console.log(arraySort(jsdb.games_list,sort_order,0));
 
@@ -53,7 +62,7 @@ function showMeTheGames() {
 
 //This function is basically the same as showMeTheGames, but filters the games.
 function filterMeTheGames(order,desc) {
-  var jsdb = JSON.parse(loadGamesList("app/data/games.json"));
+  var jsdb = JSON.parse(loadGamesList(gameDbUri));
   //Sort by a given order. 'Desc' must be a boolean.
   console.log(arraySort(jsdb.games_list,order,{reverse:desc}));
 
@@ -141,7 +150,7 @@ function changeSettings(name,value) {
 
 //This function uses loadGamesList() to parse the user's list of systems, then displays them in the sidebar.
 function showMeTheSystems() {
-  var jsdb = JSON.parse(loadGamesList("app/data/systems.json"));
+  var jsdb = JSON.parse(loadGamesList(sysDbUri));
   console.log(arraySort(jsdb.systems_list,"sort_order"));
 
   var htm, dataLength, i;
@@ -168,7 +177,7 @@ function showMeTheSystems() {
 
 //This function is the same as the other two, except (for now) it only shows the emulators in the list when adding a game.
 function showMeTheEmulators() {
-  var jsdb = JSON.parse(loadGamesList("app/data/emulators.json"));
+  var jsdb = JSON.parse(loadGamesList(emuDbUri));
   console.log(arraySort(jsdb.emulators_list,"id"));
 
   var listHtm, dataLength, i;
@@ -193,8 +202,8 @@ function showMeTheStuff() {
 function launchGame(gameId) {
   //Load game and emulator databases.
   var gamedb, emudb;
-  gamedb = JSON.parse(loadGamesList("app/data/games.json"));
-  emudb = JSON.parse(loadGamesList("app/data/emulators.json"));
+  gamedb = JSON.parse(loadGamesList(gameDbUri));
+  emudb = JSON.parse(loadGamesList(emuDbUri));
 
   //Find out which emulator the game uses, as well as the game's full path and custom commands, based on its unique ID.
   var emuId, gamePath, custom;
@@ -267,7 +276,7 @@ function removeGame(gameId) {
   if(event.which == 3) {
     //Load game database.
     var gamedb;
-    gamedb = JSON.parse(loadGamesList("app/data/games.json"));
+    gamedb = JSON.parse(loadGamesList(gameDbUri));
 
     console.log("Deleting game with ID " + gameId + "...");
 
@@ -282,7 +291,7 @@ function removeGame(gameId) {
         //Convert amended database back to JSON...
         var jsdbNew = JSON.stringify(gamedb, null, " ");
         //...and rewrite our JSON with the new data.
-        fs.writeFileSync("app/data/games.json", jsdbNew, "utf8");
+        fs.writeFileSync(gameDbUri, jsdbNew, "utf8");
 
         filterMeTheGames(sortOrder,descending);
       }
@@ -346,7 +355,7 @@ function formHandler(event) {
   data.background = bgImg;
 
   //...and, as if by magic, what was once a JSON array is now a JS object.
-  var jsdb = JSON.parse(loadGamesList("app/data/games.json"))
+  var jsdb = JSON.parse(loadGamesList(gameDbUri))
 
   //Add fresh form data to the object
   jsdb.games_list.push(data);
@@ -354,7 +363,7 @@ function formHandler(event) {
   var jsdbNew = JSON.stringify(jsdb, null, " ");
 
   //Rewrite our JSON with the new data.
-  fs.writeFileSync("app/data/games.json", jsdbNew, "utf8");
+  fs.writeFileSync(gameDbUri, jsdbNew, "utf8");
 
   //Reload the games list and close the modal while we're at it.
   filterMeTheGames(sortOrder,descending);
@@ -378,7 +387,7 @@ function formHandlerSys(event) {
   var data = formToJSON(formS.elements);
 
   //...and, as if by magic, what was once a JSON array is now a JS object.
-  var jsdb = JSON.parse(loadGamesList("app/data/systems.json"))
+  var jsdb = JSON.parse(loadGamesList(sysDbUri))
 
   //Add fresh form data to the object
   jsdb.systems_list.push(data);
@@ -386,7 +395,7 @@ function formHandlerSys(event) {
   var jsdbNew = JSON.stringify(jsdb, null, " ");
 
   //Rewrite our JSON with the new data.
-  fs.writeFileSync("app/data/systems.json", jsdbNew, "utf8");
+  fs.writeFileSync(sysDbUri, jsdbNew, "utf8");
 
   //Reload the systems list and close the modal while we're at it.
   showMeTheSystems();
@@ -405,7 +414,7 @@ function formHandlerEmu(event) {
   var data = formToJSON(formE.elements);
 
   //...and, as if by magic, what was once a JSON array is now a JS object.
-  var jsdb = JSON.parse(loadGamesList("app/data/emulators.json"))
+  var jsdb = JSON.parse(loadGamesList(emuDbUri))
 
   //Add fresh form data to the object
   jsdb.emulators_list.push(data);
@@ -413,7 +422,7 @@ function formHandlerEmu(event) {
   var jsdbNew = JSON.stringify(jsdb, null, " ");
 
   //Rewrite our JSON with the new data.
-  fs.writeFileSync("app/data/emulators.json", jsdbNew, "utf8");
+  fs.writeFileSync(emuDbUri, jsdbNew, "utf8");
 
   //Reload the systems list and close the modal while we're at it.
   showMeTheEmulators();
@@ -449,7 +458,7 @@ function copyImage(formClass,finalName) {
       break;
   }
 
-  fs.copySync(imgOrig,"app/images/" + finalName + ext);
+  fs.copySync(imgOrig,__dirname + "/images/" + finalName + ext);
   return ("images/" + finalName + ext);
 }
 
@@ -466,7 +475,7 @@ formS.addEventListener('submit', formHandlerSys);
 const formE = document.getElementsByClassName('form-emulator')[0];
 formE.addEventListener('submit', formHandlerEmu);
 
-const manageButton = document.getElementsByClassName('manage-button')[0];
+/*const manageButton = document.getElementsByClassName('manage-button')[0];
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Document loaded.")
 
@@ -486,7 +495,7 @@ document.addEventListener("DOMContentLoaded", function() {
       win = null;
     });
   })
-});
+});*/
 
 //const gameIcons = document.getElementsByClassName('game');
 
