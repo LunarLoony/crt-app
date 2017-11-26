@@ -243,19 +243,38 @@ function launchGame(gameId) {
   command = cmd3.trim();
   console.log("Launching " + command + "...");
 
-  //Execute the command, but change the working directory first.
-  var workDir = path.dirname(command);
-  console.log(workDir.replace("\"",""));
-  exec(command, {
-    cwd: workDir.replace("\"","")
-  }, (error, stdout, stderr) => {
-    if(error) {
-      console.log(error);
-    }
+  //Execute the command. If we're playing a native game (e.g. Windows), change the working directory first.
+  var workDir;
+  
+  if (emuId == 0) {
+    //Remove game.exe from path to get the game's directory.
+    workDir = path.dirname(command);
+    console.log("Start in: " + workDir.replace("\"",""));
+    exec(command, {
+      cwd: workDir.replace("\"","")
+    }, (error, stdout, stderr) => {
+      if(error) {
+        console.log(error);
+      }
 
-    console.log(stdout);
-    console.log(stderr);
-  });
+      console.log(stdout);
+      console.log(stderr);
+    });
+  } else {
+    //Remove emulator.exe from path to get the working directory.
+    workDir = path.dirname(emuPath);
+    console.log("Start in: " + workDir.replace("\"",""));
+    exec(command, {
+      cwd: workDir.replace("\"","")
+    }, (error, stdout, stderr) => {
+      if(error) {
+        console.log(error);
+      }
+
+      console.log(stdout);
+      console.log(stderr);
+    });
+  }
 };
 
 //This function removes a game from the list.
