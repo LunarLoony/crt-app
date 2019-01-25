@@ -71,7 +71,7 @@ body a:link, body a:hover, body a:visited, body a:active {
   width: 85%;
   margin-left: 16em;
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
 }
 
 #games .game {

@@ -13,11 +13,11 @@
     "postinstall": "electron-rebuild"
   },
   "devDependencies": {
-    "electron": "^1.8.1",
+    "electron": "^1.8.8",
     "electron-rebuild": "^1.6.0"
   },
   "dependencies": {
     "array-sort": "^0.1.4",
-    "fs-extra": "^4.0.2"
+    "fs-extra": "^4.0.3"
   }
 }
